@@ -4,15 +4,6 @@ public with sharing class CandidateGradeController {
     
     @AuraEnabled
     public static CandidateGradeInfo getCandidateGrade(Id contactId) {
-
-        if (!Schema.sObjectType.Contact.fields.Name.isAccessible() 
-            || !Schema.sObjectType.Contact.fields.Salary__c.isAccessible() 
-            || !Schema.sObjectType.Contact.fields.NextAvailableDate__c.isAccessible()
-            || !Schema.sObjectType.User.fields.Seniority__c.isAccessible()){
-                
-            throw new AuraHandledException('You don\'t have access to those fields!');
-        }
-
         Contact currentContact = [SELECT Name, Salary__c, NextAvailableDate__c FROM Contact where Id = :contactId];
         User currentUser = [SELECT Seniority__c FROM User where Id = :UserInfo.getUserId()];
         String temperature = '';
